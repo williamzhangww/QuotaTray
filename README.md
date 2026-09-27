@@ -4,6 +4,8 @@ An unofficial Windows tray monitor for OpenAI Codex usage limits.
 
 ## Screenshot / What it shows
 
+![QuotaTray running screenshot](docs/screenshot.png)
+
 The tray icon displays the 5-hour remaining percentage. Its tooltip shows 5-hour and weekly remaining quota, reset countdowns, reset credits, last refresh status, and stale or failure state.
 
 ## Features
