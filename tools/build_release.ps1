@@ -62,8 +62,7 @@ $python = if ($env:QUOTATRAY_PYTHON) {
 } else {
     (Get-Command python).Source
 }
-$innoSource = Join-Path $root 'tools\inno\InnoSetup7'
-$innoStage = Join-Path $env:LOCALAPPDATA 'QuotaTrayBuildTools\InnoSetup7'
+$innoDiscoveryModule = Join-Path $root 'tools\inno_setup_discovery.ps1'
 $distPayload = Join-Path $root 'dist\QuotaTray'
 
 if (-not (Test-Path $python)) { throw "Python 3.10.11 not found: $python" }
@@ -104,6 +103,13 @@ Remove-Item Env:QT_QPA_FONTDIR -ErrorAction SilentlyContinue
 Remove-Item Env:QML2_IMPORT_PATH -ErrorAction SilentlyContinue
 Remove-Item Env:QML_IMPORT_PATH -ErrorAction SilentlyContinue
 Write-Host 'Controlled build PATH enabled; Codex runtime, Poppler, libheif, Conda, and unrelated application paths are excluded.' -ForegroundColor Green
+
+. $innoDiscoveryModule
+$innoCompiler = Resolve-InnoSetup7Compiler
+$isccHash = (Get-FileHash -LiteralPath $innoCompiler.Path -Algorithm SHA256).Hash
+Write-Host "Inno Setup compiler: $($innoCompiler.Path)"
+Write-Host "Inno Setup version: $($innoCompiler.Version)"
+Write-Host "ISCC SHA256: $isccHash"
 
 # --------------------------------------------------------------------------
 # 1. Preflight
@@ -245,81 +251,18 @@ public static class ReleaseIntegrity {
 }
 if (-not $SkipInstaller) {
     Write-Host "`n--- [5/6] Inno Setup installer ---" -ForegroundColor Cyan
-    if (-not (Test-Path (Join-Path $innoSource 'ISCC.exe'))) { throw "ISCC.exe not found: $innoSource" }
-
-    # Native tool execution from the sandboxed workspace has proven unreliable.
-    # Keep the tracked bundle as source of truth, but execute a verified copy
-    # from a normal per-user build-tools directory with its own minimal PATH.
-    $sourceFiles = @(Get-ChildItem -LiteralPath $innoSource -File -Recurse | Sort-Object FullName)
-    $sourceHashes = @{}
-    foreach ($file in $sourceFiles) {
-        $relative = $file.FullName.Substring($innoSource.Length).TrimStart('\')
-        $sourceHashes[$relative] = (Get-FileHash -LiteralPath $file.FullName -Algorithm SHA256).Hash
-    }
-    $stageIsRepo = $false
-    try {
-        $stageFull = [IO.Path]::GetFullPath($innoStage)
-        $repoFull = [IO.Path]::GetFullPath($root).TrimEnd('\') + '\'
-        $stageIsRepo = $stageFull.StartsWith($repoFull, [StringComparison]::OrdinalIgnoreCase) -or (Test-Path -LiteralPath (Join-Path $stageFull '.git'))
-    } catch { throw "Cannot validate Inno staging path: $innoStage" }
-    if ($stageIsRepo) { throw "Inno staging path must not be inside a Git repository: $innoStage" }
-
-    $stageMatches = $false
-    if (Test-Path -LiteralPath $innoStage) {
-        $stageFiles = @(Get-ChildItem -LiteralPath $innoStage -File -Recurse | Sort-Object FullName)
-        if ($stageFiles.Count -eq $sourceFiles.Count) {
-            $stageMatches = $true
-            foreach ($file in $stageFiles) {
-                $relative = $file.FullName.Substring($innoStage.Length).TrimStart('\')
-                if (-not $sourceHashes.ContainsKey($relative) -or (Get-FileHash -LiteralPath $file.FullName -Algorithm SHA256).Hash -ne $sourceHashes[$relative]) {
-                    $stageMatches = $false; break
-                }
-            }
-        }
-    }
-    if (-not $stageMatches) {
-        if (Test-Path -LiteralPath $innoStage) { Remove-Item -LiteralPath $innoStage -Recurse -Force }
-        New-Item -ItemType Directory -Path (Split-Path -Parent $innoStage) -Force | Out-Null
-        Copy-Item -LiteralPath $innoSource -Destination $innoStage -Recurse -Force
-    }
-
-    $stageFiles = @(Get-ChildItem -LiteralPath $innoStage -File -Recurse | Sort-Object FullName)
-    if ($stageFiles.Count -ne $sourceFiles.Count) { throw 'ERROR: Inno Setup staging hash mismatch (file count)' }
-    foreach ($file in $stageFiles) {
-        $relative = $file.FullName.Substring($innoStage.Length).TrimStart('\')
-        if (-not $sourceHashes.ContainsKey($relative) -or (Get-FileHash -LiteralPath $file.FullName -Algorithm SHA256).Hash -ne $sourceHashes[$relative]) {
-            throw "ERROR: Inno Setup staging hash mismatch: $relative"
-        }
-    }
-    $stagedIscc = Join-Path $innoStage 'ISCC.exe'
-    $isccHash = (Get-FileHash -LiteralPath $stagedIscc -Algorithm SHA256).Hash
-    $versionInfo = (Get-Item -LiteralPath $stagedIscc).VersionInfo
-    $isccVersion = if ($versionInfo.ProductVersion -and $versionInfo.ProductVersion -ne '0.0.0.0') { $versionInfo.ProductVersion } else { 'version metadata unavailable (0.0.0.0)' }
-    Write-Host "Inno source: $innoSource"
-    Write-Host "Inno staging: $innoStage"
-    Write-Host "ISCC version: $isccVersion"
-    Write-Host "ISCC SHA256: $isccHash"
-    Write-Host "Inno bundle SHA256 verification: PASS ($($sourceFiles.Count) files)"
-    $stageLabel = [ReleaseIntegrity]::Read($stagedIscc)
-    if ($stageLabel -match ';(LW|S-1-16-4096|S-1-16-0)\)') { throw 'Inno staging directory is Low Integrity; refusing to execute ISCC.' }
-
+    $compilerDirectory = Split-Path -Parent $innoCompiler.Path
     $savedPath = $env:PATH
-    $env:PATH = @($innoStage, (Join-Path $env:SystemRoot 'System32'), $env:SystemRoot) -join ';'
+    $env:PATH = @($compilerDirectory, (Join-Path $env:SystemRoot 'System32'), $env:SystemRoot) -join ';'
     Push-Location (Join-Path $root 'installer')
     try {
-        $helpExit = Invoke-Native -FilePath $stagedIscc -Arguments @('/?')
-        if ($helpExit -ne 0) { throw "Staged ISCC /? failed with exit code $helpExit" }
-        Write-Host 'Staged ISCC /?: PASS'
-        $rc = Invoke-Native -FilePath $stagedIscc -Arguments @('QuotaTray.iss')
+        $helpExit = Invoke-Native -FilePath $innoCompiler.Path -Arguments @('/?')
+        if ($helpExit -ne 0) { throw "ISCC /? failed with exit code $helpExit" }
+        Write-Host 'ISCC /?: PASS'
+        $rc = Invoke-Native -FilePath $innoCompiler.Path -Arguments @('QuotaTray.iss')
         if ($rc -ne 0) { throw 'Inno Setup compile failed' }
     } finally { Pop-Location; $env:PATH = $savedPath }
     if (-not (Test-Path $setup)) { throw "installer not produced: $setup" }
-    try {
-        Remove-Item -LiteralPath $innoStage -Recurse -Force -ErrorAction Stop
-        Write-Host "Removed Inno staging directory: $innoStage"
-    } catch {
-        Write-Warning "CLEANUP WARNING: could not remove Inno staging directory $innoStage : $($_.Exception.Message)"
-    }
 } else {
     Write-Host "`n--- [5/6] installer (skipped) ---" -ForegroundColor DarkGray
 }

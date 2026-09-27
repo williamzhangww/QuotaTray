@@ -14,8 +14,8 @@ VersionInfoCompany={#MyAppPublisher}
 VersionInfoDescription={#MyAppDescription}
 VersionInfoProductName={#MyAppName}
 VersionInfoProductVersion={#MyAppVersion}
-; Keep the v0.7.3 install path so AppId-based upgrades reuse the existing install.
-DefaultDirName={localappdata}\Programs\CodexUsageMonitor
+DefaultDirName={localappdata}\Programs\QuotaTray
+UsePreviousAppDir=no
 DefaultGroupName={#MyAppName}
 DisableProgramGroupPage=yes
 PrivilegesRequired=lowest
@@ -51,27 +51,25 @@ Source: "..\licenses\*"; DestDir: "{app}\licenses"; Flags: ignoreversion recurse
 ; exactly the class of problem that produces confusing native DLL load errors.
 ; Remove the previous payload before laying down the new one.
 ;
-; This ONLY touches the program directory ({app}); user data lives in
-; %LOCALAPPDATA%\CodexUsageMonitor (usage.db, settings, logs) and is never
-; referenced here. PrepareToInstall requests shutdown and verifies exit before
-; these entries run; upgrades do not automatically run the old uninstaller.
+; This ONLY touches the program directory ({app}); user data lives separately
+; under %LOCALAPPDATA%\QuotaTray and is never referenced here. PrepareToInstall
+; requests shutdown and verifies exit before these entries run.
 [InstallDelete]
 Type: filesandordirs; Name: "{app}\_internal"
 Type: files; Name: "{app}\{#MyAppExeName}"
-Type: files; Name: "{app}\CodexUsageMonitor.exe"
 
 [Icons]
 Name: "{autoprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; WorkingDir: "{app}"; IconFilename: "{app}\_internal\assets\app.ico"
 Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; WorkingDir: "{app}"; IconFilename: "{app}\_internal\assets\app.ico"; Tasks: desktopicon
 
 [Registry]
-Root: HKCU; Subkey: "Software\Microsoft\Windows\CurrentVersion\Run"; ValueType: string; ValueName: "CodexUsageMonitor"; ValueData: """{app}\{#MyAppExeName}"""; Tasks: startupwithwindows; Flags: uninsdeletevalue
+Root: HKCU; Subkey: "Software\Microsoft\Windows\CurrentVersion\Run"; ValueType: string; ValueName: "QuotaTray"; ValueData: """{app}\{#MyAppExeName}"""; Tasks: startupwithwindows; Flags: uninsdeletevalue
 
 [Run]
 Filename: "{app}\{#MyAppExeName}"; Description: "Launch QuotaTray"; Flags: nowait postinstall skipifsilent
 
 [UninstallRun]
-Filename: "{app}\{#MyAppExeName}"; Parameters: "--quit"; RunOnceId: "QuitCodexUsageMonitor"; Flags: runhidden waituntilterminated skipifdoesntexist
+Filename: "{app}\{#MyAppExeName}"; Parameters: "--quit"; RunOnceId: "QuitQuotaTray"; Flags: runhidden waituntilterminated skipifdoesntexist
 
 [UninstallDelete]
 Type: filesandordirs; Name: "{app}\_internal"
@@ -81,6 +79,30 @@ Type: dirifempty; Name: "{app}"
 const
   VCRedistRegistryKey = 'SOFTWARE\Microsoft\VisualStudio\14.0\VC\Runtimes\x64';
   VCRedistOfficialUrl = 'https://aka.ms/vc14/vc_redist.x64.exe';
+
+  AppUninstallRegistryKey = 'Software\Microsoft\Windows\CurrentVersion\Uninstall\{F72E59D8-41C1-4A22-9DBA-14F8C331D292}_is1';
+
+function WithoutTrailingBackslashes(Value: String): String;
+begin
+  Result := Value;
+  while (Length(Result) > 0) and (Result[Length(Result)] = '\') do
+    Delete(Result, Length(Result), 1);
+end;
+function HasLegacyInstallLocation: Boolean;
+var
+  ExistingInstallLocation, ExpectedInstallLocation: String;
+begin
+  Result := False;
+  if not RegKeyExists(HKEY_CURRENT_USER, AppUninstallRegistryKey) then exit;
+  ExpectedInstallLocation := WithoutTrailingBackslashes(ExpandConstant('{localappdata}\Programs\QuotaTray'));
+  if not RegQueryStringValue(HKEY_CURRENT_USER, AppUninstallRegistryKey,
+      'InstallLocation', ExistingInstallLocation) then begin
+    Result := True;
+    exit;
+  end;
+  Result := CompareText(WithoutTrailingBackslashes(ExistingInstallLocation),
+      ExpectedInstallLocation) <> 0;
+end;
 
 function IsNumericVersionComponent(Value: String): Boolean;
 var
@@ -178,6 +200,13 @@ var
   MessageText: String;
   ErrorCode: Integer;
 begin
+  if HasLegacyInstallLocation then begin
+    MsgBox('An earlier QuotaTray installation uses a legacy install location.' + #13#10 + #13#10 +
+      'Please uninstall the existing QuotaTray version first,' + #13#10 +
+      'then run this installer again.', mbError, MB_OK);
+    Result := False;
+    exit;
+  end;
   Result := HasSupportedVCRedist;
   if Result then exit;
   MessageText := 'QuotaTray requires the Microsoft Visual C++ Redistributable (x64).' + #13#10 + #13#10 +
@@ -196,28 +225,26 @@ begin
   { Check process lifetime as well as the mutex: guards close just before exit. }
   Services := CreateOleObject('WbemScripting.SWbemLocator');
   Services := Services.ConnectServer('.', 'root\CIMV2');
-  Processes := Services.ExecQuery('SELECT ProcessId FROM Win32_Process WHERE Name = ''CodexUsageMonitor.exe'' OR Name = ''QuotaTray.exe''');
+  Processes := Services.ExecQuery('SELECT ProcessId FROM Win32_Process WHERE Name = ''QuotaTray.exe''');
   Result := (Processes.Count > 0) or
-    CheckForMutexes('Local\CodexUsageMonitor.SingleInstance.Mutex');
+    CheckForMutexes('Local\QuotaTray.SingleInstance.Mutex');
 end;
 
 function PrepareToInstall(var NeedsRestart: Boolean): String;
 var
-  OldExe: String;
+  AppExe: String;
   ResultCode, Attempt: Integer;
 begin
   Result := '';
   try
     if not MonitorRunning then exit;
-    OldExe := ExpandConstant('{app}\CodexUsageMonitor.exe');
-    if not FileExists(OldExe) then
-      OldExe := ExpandConstant('{app}\{#MyAppExeName}');
-    if not FileExists(OldExe) then begin
+    AppExe := ExpandConstant('{app}\{#MyAppExeName}');
+    if not FileExists(AppExe) then begin
       Result := 'QuotaTray is running. Exit it from its tray menu, then retry installation.';
       exit;
     end;
     Log('Requesting graceful shutdown using installed executable --quit');
-    if not Exec(OldExe, '--quit', ExpandConstant('{app}'), SW_HIDE,
+    if not Exec(AppExe, '--quit', ExpandConstant('{app}'), SW_HIDE,
         ewNoWait, ResultCode) then begin
       Result := 'Could not request QuotaTray shutdown. Exit it from its tray menu, then retry installation.';
       exit;
@@ -231,34 +258,13 @@ begin
     end;
     Result := 'QuotaTray did not exit within 30 seconds. No program files were replaced. Exit it from its tray menu, then retry or cancel installation.';
   except
-    Result := 'Unable to verify Codex Usage Monitor has exited. Installation stopped before replacing program files. ' + GetExceptionMessage;
-  end;
-end;
-
-procedure CurStepChanged(CurStep: TSetupStep);
-var
-  StartupValue: String;
-begin
-  { Preserve enabled v0.7.3 startup while retargeting its stable Run value. }
-  if CurStep = ssPostInstall then
-  begin
-    if RegQueryStringValue(HKEY_CURRENT_USER,
-        'Software\Microsoft\Windows\CurrentVersion\Run',
-        'CodexUsageMonitor', StartupValue) then
-    begin
-      if (Pos('CodexUsageMonitor.exe', StartupValue) > 0) or
-         (Pos('QuotaTray.exe', StartupValue) > 0) then
-        RegWriteStringValue(HKEY_CURRENT_USER,
-          'Software\Microsoft\Windows\CurrentVersion\Run',
-          'CodexUsageMonitor', '"' + ExpandConstant('{app}\{#MyAppExeName}') + '"');
-    end;
+    Result := 'Unable to verify QuotaTray has exited. Installation stopped before replacing program files. ' + GetExceptionMessage;
   end;
 end;
 
 procedure CurUninstallStepChanged(CurUninstallStep: TUninstallStep);
 begin
   if CurUninstallStep = usUninstall then
-  begin
-    RegDeleteValue(HKEY_CURRENT_USER, 'Software\Microsoft\Windows\CurrentVersion\Run', 'CodexUsageMonitor');
-  end;
+    RegDeleteValue(HKEY_CURRENT_USER,
+      'Software\Microsoft\Windows\CurrentVersion\Run', 'QuotaTray');
 end;

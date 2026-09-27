@@ -25,7 +25,7 @@ The tray icon displays the 5-hour remaining percentage. Its tooltip shows 5-hour
 
 Download `QuotaTray-<version>-Setup.exe` from the project GitHub Releases page. The installer is per-user and does not require administrator rights. It currently has no Authenticode signature. Verify the file hash against the SHA256 value published with that release before running it.
 
-The installer upgrades the v0.7.3 product in place using its existing install identity and legacy program directory `%LOCALAPPDATA%\Programs\CodexUsageMonitor`. User data remains under `%LOCALAPPDATA%\CodexUsageMonitor` to preserve existing history, settings, and logs.
+The installer is per user and installs to `%LOCALAPPDATA%\Programs\QuotaTray`. If an earlier QuotaTray version is registered in a different location, uninstall it first and then run the installer. The v0.8.1 clean namespace does not migrate data from earlier versions.
 
 ## How the tray number works
 
@@ -58,17 +58,17 @@ The application reads quota data and does not mutate quota limits or execute res
 Settings, logs, and quota history are stored under:
 
 ```text
-%LOCALAPPDATA%\CodexUsageMonitor\
+%LOCALAPPDATA%\QuotaTray\
   usage.db
   logs\app.log
   settings\settings.ini
 ```
 
-This is a deliberate legacy path retained from Codex Usage Monitor v0.7.3. QuotaTray does not move or delete existing data during the product rename. Program files are installed under `%LOCALAPPDATA%\Programs\CodexUsageMonitor` to support the in-place upgrade.
+This is the current QuotaTray data directory. Earlier versions used a different data directory; QuotaTray 0.8.1 does not read, move, or delete that data. If you want to keep using an earlier version, back up its data before uninstalling it.
 
 ## Uninstall
 
-Uninstall QuotaTray from Windows Installed Apps / Apps & Features. The uninstaller removes program files, shortcuts, and its startup registration. It keeps `%LOCALAPPDATA%\CodexUsageMonitor` so history and settings are preserved; remove that folder yourself only if you also want to delete the local data.
+Uninstall QuotaTray from Windows Installed Apps / Apps & Features. The uninstaller removes program files, shortcuts, and its startup registration. It keeps `%LOCALAPPDATA%\QuotaTray` so history and settings remain; remove that folder yourself only if you also want to delete the local data.
 
 ## Troubleshooting
 
@@ -82,14 +82,20 @@ Uninstall QuotaTray from Windows Installed Apps / Apps & Features. The uninstall
 In PowerShell, compare the downloaded installer hash with the SHA256 value published on its GitHub Release page:
 
 ```powershell
-(Get-FileHash .\QuotaTray-0.8.0-Setup.exe -Algorithm SHA256).Hash
+(Get-FileHash .\QuotaTray-<version>-Setup.exe -Algorithm SHA256).Hash
 ```
 
 The result should exactly match the release value.
 
 ## Build from source
 
-Requirements: 64-bit Windows, Microsoft Visual C++ Redistributable (x64) 14.44 or newer, Python 3.10.11, PySide6 6.11.2, PyInstaller 6.22.3, and the tracked Inno Setup 7 bundle under `tools/inno/InnoSetup7/`. From a PowerShell prompt in the cloned repository:
+Requirements: 64-bit Windows, Microsoft Visual C++ Redistributable (x64) 14.44 or newer, Python 3.10.11, PySide6 6.11.2, PyInstaller 6.22.3, and Inno Setup 7 (64-bit recommended). Install Inno Setup 7 with:
+
+```powershell
+winget install --id JRSoftware.InnoSetup.7 -e -s winget -i
+```
+
+The release script auto-detects an installed Inno Setup 7 compiler. Set `QUOTATRAY_ISCC` to the full path of `ISCC.exe` to select a specific compiler. From a PowerShell prompt in the cloned repository:
 
 ```powershell
 python -m pip install -r requirements.txt
@@ -97,7 +103,7 @@ python -m pip install -e .
 powershell -ExecutionPolicy Bypass -File tools\build_release.ps1
 ```
 
-The release script requires Python 3.10.11 and uses the tracked Inno Setup 7 bundle. It creates an onedir package and installer, verifies the frozen Qt/runtime payload, and writes SHA256 output under `release\`.
+The release script requires Python 3.10.11 and an installed Inno Setup 7 compiler. It creates an onedir package and installer, verifies the frozen Qt/runtime payload, and writes SHA256 output under `release\`.
 
 ## License
 

@@ -20,13 +20,26 @@ from tools.generate_release_metadata import _installer_version_text, _version_in
 def test_release_version_consistency() -> None:
     metadata = release_metadata()
 
-    assert __version__ == "0.8.0"
+    assert __version__ == "0.8.1"
     assert metadata.version == __version__
-    assert version_tuple() == (0, 8, 0, 0)
+    assert version_tuple() == (0, 8, 1, 0)
+
+
+def test_installer_rejects_legacy_registered_install_location() -> None:
+    installer = Path("installer/QuotaTray.iss").read_text(encoding="utf-8")
+
+    assert "UsePreviousAppDir=no" in installer
+    assert "DefaultDirName={localappdata}\\Programs\\QuotaTray" in installer
+    assert "RegKeyExists(HKEY_CURRENT_USER, AppUninstallRegistryKey)" in installer
+    assert "RegQueryStringValue(HKEY_CURRENT_USER, AppUninstallRegistryKey" in installer
+    assert "CompareText(WithoutTrailingBackslashes(ExistingInstallLocation)" in installer
+    assert "An earlier QuotaTray installation uses a legacy install location." in installer
+    assert "Please uninstall the existing QuotaTray version first," in installer
+    assert "then run this installer again." in installer
 
 
 def test_frozen_resource_path_helper(monkeypatch, tmp_path) -> None:
-    fake_exe = tmp_path / "Programs" / "CodexUsageMonitor" / "QuotaTray.exe"
+    fake_exe = tmp_path / "Programs" / "QuotaTray" / "QuotaTray.exe"
     monkeypatch.setattr(sys, "frozen", True, raising=False)
     monkeypatch.setattr(sys, "executable", str(fake_exe))
 
@@ -35,20 +48,20 @@ def test_frozen_resource_path_helper(monkeypatch, tmp_path) -> None:
 
 
 def test_install_safe_app_data_paths_do_not_use_install_dir(monkeypatch, tmp_path) -> None:
-    install_dir = tmp_path / "Programs" / "CodexUsageMonitor"
+    install_dir = tmp_path / "Programs" / "QuotaTray"
     local_app_data = tmp_path / "LocalAppData"
     install_dir.mkdir(parents=True)
     monkeypatch.chdir(install_dir)
     monkeypatch.setenv("LOCALAPPDATA", str(local_app_data))
 
-    assert app_data_dir() == local_app_data / "CodexUsageMonitor"
-    assert database_path() == local_app_data / "CodexUsageMonitor" / "usage.db"
-    assert logs_dir() == local_app_data / "CodexUsageMonitor" / "logs"
-    assert settings_dir() == local_app_data / "CodexUsageMonitor" / "settings"
+    assert app_data_dir() == local_app_data / "QuotaTray"
+    assert database_path() == local_app_data / "QuotaTray" / "usage.db"
+    assert logs_dir() == local_app_data / "QuotaTray" / "logs"
+    assert settings_dir() == local_app_data / "QuotaTray" / "settings"
 
 
 def test_frozen_mode_ignores_cwd_legacy_config(monkeypatch, tmp_path) -> None:
-    install_dir = tmp_path / "Programs" / "CodexUsageMonitor"
+    install_dir = tmp_path / "Programs" / "QuotaTray"
     install_dir.mkdir(parents=True)
     (install_dir / "config.json").write_text('{"refresh_interval_minutes": 30}', encoding="utf-8")
     monkeypatch.chdir(install_dir)
@@ -61,7 +74,7 @@ def test_startup_cleanup_helper_removes_run_value() -> None:
     registry = FakeRegistry()
     manager = StartupManager(registry)
 
-    manager.enable(r"C:\Users\me\AppData\Local\Programs\CodexUsageMonitor\CodexUsageMonitor.exe")
+    manager.enable(r"C:\Users\me\AppData\Local\Programs\QuotaTray\QuotaTray.exe")
     manager.cleanup()
 
     assert APP_RUN_VALUE not in registry.values
@@ -71,7 +84,7 @@ def test_codex_discovery_source_has_no_developer_absolute_path() -> None:
     source = Path(codex_usage_provider.__file__).read_text(encoding="utf-8")
 
     assert r"C:\Users" not in source
-    assert r"CodexUsageMonitor\dist" not in source
+    assert r"QuotaTray\dist" not in source
     assert ".sandbox-bin" in source
     assert "WindowsApps" in source
 
@@ -101,9 +114,9 @@ def test_tray_menu_no_longer_exposes_details_or_taskbar_dock() -> None:
 
 
 def test_windows_instance_names_are_stable() -> None:
-    assert MUTEX_NAME == "Local\\CodexUsageMonitor.SingleInstance.Mutex"
-    assert SHOW_EVENT_NAME == "Local\\CodexUsageMonitor.SingleInstance.Show"
-    assert QUIT_EVENT_NAME == "Local\\CodexUsageMonitor.SingleInstance.Quit"
+    assert MUTEX_NAME == "Local\\QuotaTray.SingleInstance.Mutex"
+    assert SHOW_EVENT_NAME == "Local\\QuotaTray.SingleInstance.Show"
+    assert QUIT_EVENT_NAME == "Local\\QuotaTray.SingleInstance.Quit"
     assert WAIT_TIMEOUT == 258
     assert hasattr(main_module.WindowsInstanceGuard, "wait_until_released")
 
@@ -136,7 +149,7 @@ def test_quit_command_without_existing_instance_exits_before_app_start(monkeypat
         def close(self) -> None:
             calls.append("close")
 
-    monkeypatch.setattr(sys, "argv", ["CodexUsageMonitor.exe", "--quit"])
+    monkeypatch.setattr(sys, "argv", ["QuotaTray.exe", "--quit"])
     monkeypatch.setattr(main_module, "WindowsInstanceGuard", FakeWindowsGuard)
     monkeypatch.setattr(main_module, "ensure_app_dirs", lambda: calls.append("ensure_app_dirs"))
     monkeypatch.setattr(main_module, "setup_logging", lambda: calls.append("setup_logging"))

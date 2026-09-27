@@ -6,5 +6,6 @@ dist/
 build/
 release/
 *.egg-info/
+# Local third-party build tools; Inno Setup is an external prerequisite.
 tools/inno/
 .userdata-backup-*/

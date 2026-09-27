@@ -7,10 +7,9 @@ ERROR_ALREADY_EXISTS = 183
 WAIT_OBJECT_0 = 0
 WAIT_TIMEOUT = 258
 
-# Keep these names stable so a new installer can gracefully stop v0.7.3.
-MUTEX_NAME = "Local\\CodexUsageMonitor.SingleInstance.Mutex"
-SHOW_EVENT_NAME = "Local\\CodexUsageMonitor.SingleInstance.Show"
-QUIT_EVENT_NAME = "Local\\CodexUsageMonitor.SingleInstance.Quit"
+MUTEX_NAME = "Local\\QuotaTray.SingleInstance.Mutex"
+SHOW_EVENT_NAME = "Local\\QuotaTray.SingleInstance.Show"
+QUIT_EVENT_NAME = "Local\\QuotaTray.SingleInstance.Quit"
 
 
 class WindowsInstanceGuard:

@@ -3,8 +3,7 @@ from __future__ import annotations
 import os
 from pathlib import Path
 
-# Preserve v0.7.3 user data across the product rename.
-APP_DIR_NAME = "CodexUsageMonitor"
+APP_DIR_NAME = "QuotaTray"
 
 
 def app_data_dir() -> Path:

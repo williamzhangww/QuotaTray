@@ -23,10 +23,10 @@ from codex_usage_monitor.startup import APP_RUN_VALUE, StartupManager
 def test_app_data_paths(monkeypatch, tmp_path) -> None:
     monkeypatch.setenv("LOCALAPPDATA", str(tmp_path))
 
-    assert app_data_dir() == tmp_path / "CodexUsageMonitor"
-    assert database_path() == tmp_path / "CodexUsageMonitor" / "usage.db"
-    assert logs_dir() == tmp_path / "CodexUsageMonitor" / "logs"
-    assert settings_dir() == tmp_path / "CodexUsageMonitor" / "settings"
+    assert app_data_dir() == tmp_path / "QuotaTray"
+    assert database_path() == tmp_path / "QuotaTray" / "usage.db"
+    assert logs_dir() == tmp_path / "QuotaTray" / "logs"
+    assert settings_dir() == tmp_path / "QuotaTray" / "settings"
 
 
 def test_settings_defaults(tmp_path) -> None:
@@ -79,8 +79,8 @@ def test_startup_registration_enable_disable() -> None:
     registry = FakeRegistry()
     manager = StartupManager(registry)
 
-    manager.enable(r"C:\Apps\CodexUsageMonitor.exe")
-    assert registry.values[APP_RUN_VALUE] == r'"C:\Apps\CodexUsageMonitor.exe"'
+    manager.enable(r"C:\Apps\QuotaTray.exe")
+    assert registry.values[APP_RUN_VALUE] == r'"C:\Apps\QuotaTray.exe"'
     assert manager.is_enabled() is True
 
     manager.disable()
@@ -94,21 +94,21 @@ def test_log_initialization(monkeypatch, tmp_path) -> None:
     setup_logging()
     logging.getLogger("codex_usage_monitor.test").info("log smoke")
 
-    assert (tmp_path / "CodexUsageMonitor" / "logs" / LOG_FILE_NAME).exists()
+    assert (tmp_path / "QuotaTray" / "logs" / LOG_FILE_NAME).exists()
 
 
 def test_version_source() -> None:
-    assert __version__ == "0.8.0"
+    assert __version__ == "0.8.1"
 
 
 def test_single_instance_server_name() -> None:
-    assert instance_server_name() == "CodexUsageMonitor.SingleInstance"
+    assert instance_server_name() == "QuotaTray.SingleInstance"
 
 
 def test_single_instance_lock_path(monkeypatch, tmp_path) -> None:
     monkeypatch.setenv("LOCALAPPDATA", str(tmp_path))
 
-    assert instance_lock_path() == str(tmp_path / "CodexUsageMonitor" / "CodexUsageMonitor.lock")
+    assert instance_lock_path() == str(tmp_path / "QuotaTray" / "QuotaTray.lock")
 
 
 class FakeRegistry:

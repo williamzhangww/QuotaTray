@@ -1,3 +1,11 @@
+# QuotaTray 0.8.1
+
+## Highlights
+
+- Standardizes program, data, startup, and single-instance paths under the QuotaTray name.
+- Requires uninstalling an earlier version registered in a different install location before setup can continue.
+- Does not migrate settings or quota history from earlier versions.
+
 # QuotaTray 0.8.0
 
 QuotaTray is an unofficial Windows tray monitor for OpenAI Codex usage limits.

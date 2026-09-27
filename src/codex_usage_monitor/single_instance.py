@@ -4,11 +4,11 @@ from codex_usage_monitor.app_paths import app_data_dir
 
 
 def instance_server_name() -> str:
-    return "CodexUsageMonitor.SingleInstance"
+    return "QuotaTray.SingleInstance"
 
 
 def instance_lock_path() -> str:
-    return str(app_data_dir() / "CodexUsageMonitor.lock")
+    return str(app_data_dir() / "QuotaTray.lock")
 
 
 class SingleInstanceGuard:

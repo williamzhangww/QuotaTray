@@ -5,8 +5,7 @@ from pathlib import Path
 from typing import Any
 
 RUN_KEY = r"Software\Microsoft\Windows\CurrentVersion\Run"
-# Keep the value name stable across the v0.7.3 to QuotaTray upgrade.
-APP_RUN_VALUE = "CodexUsageMonitor"
+APP_RUN_VALUE = "QuotaTray"
 
 
 class StartupManager:
