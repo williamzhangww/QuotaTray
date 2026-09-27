@@ -1,0 +1,133 @@
+# Frozen Qt/PySide6 runtime manifest
+
+Generated from dist/QuotaTray by the v0.8.0 final build. Build environment: Windows x64, PySide6 6.11.2, shiboken6 6.11.2, Qt 6.11.2. This is a filename inventory, not a license determination.
+
+## Qt shared libraries
+Qt6Core.dll
+Qt6Gui.dll
+Qt6Network.dll
+Qt6Widgets.dll
+
+## PySide6 extension modules
+QtCore.pyd
+QtGui.pyd
+QtNetwork.pyd
+QtWidgets.pyd
+
+## Qt plugins
+plugins\imageformats\qico.dll
+plugins\platforms\qwindows.dll
+plugins\styles\qmodernwindowsstyle.dll
+
+## Qt translation resources (96 files)
+translations\qt_ar.qm
+translations\qt_bg.qm
+translations\qt_ca.qm
+translations\qt_cs.qm
+translations\qt_da.qm
+translations\qt_de.qm
+translations\qt_en.qm
+translations\qt_es.qm
+translations\qt_fa.qm
+translations\qt_fi.qm
+translations\qt_fr.qm
+translations\qt_gd.qm
+translations\qt_gl.qm
+translations\qt_he.qm
+translations\qt_help_ar.qm
+translations\qt_help_bg.qm
+translations\qt_help_ca.qm
+translations\qt_help_cs.qm
+translations\qt_help_da.qm
+translations\qt_help_de.qm
+translations\qt_help_en.qm
+translations\qt_help_es.qm
+translations\qt_help_fr.qm
+translations\qt_help_gl.qm
+translations\qt_help_hr.qm
+translations\qt_help_hu.qm
+translations\qt_help_it.qm
+translations\qt_help_ja.qm
+translations\qt_help_ka.qm
+translations\qt_help_ko.qm
+translations\qt_help_nl.qm
+translations\qt_help_nn.qm
+translations\qt_help_pl.qm
+translations\qt_help_pt_BR.qm
+translations\qt_help_ru.qm
+translations\qt_help_sk.qm
+translations\qt_help_sl.qm
+translations\qt_help_sv.qm
+translations\qt_help_tr.qm
+translations\qt_help_uk.qm
+translations\qt_help_zh_CN.qm
+translations\qt_help_zh_TW.qm
+translations\qt_hr.qm
+translations\qt_hu.qm
+translations\qt_it.qm
+translations\qt_ja.qm
+translations\qt_ka.qm
+translations\qt_ko.qm
+translations\qt_lg.qm
+translations\qt_lt.qm
+translations\qt_lv.qm
+translations\qt_nl.qm
+translations\qt_nn.qm
+translations\qt_pl.qm
+translations\qt_pt_BR.qm
+translations\qt_pt_PT.qm
+translations\qt_ru.qm
+translations\qt_sk.qm
+translations\qt_sl.qm
+translations\qt_sv.qm
+translations\qt_tr.qm
+translations\qt_uk.qm
+translations\qt_zh_CN.qm
+translations\qt_zh_TW.qm
+translations\qtbase_ar.qm
+translations\qtbase_bg.qm
+translations\qtbase_ca.qm
+translations\qtbase_cs.qm
+translations\qtbase_da.qm
+translations\qtbase_de.qm
+translations\qtbase_en.qm
+translations\qtbase_es.qm
+translations\qtbase_fa.qm
+translations\qtbase_fi.qm
+translations\qtbase_fr.qm
+translations\qtbase_gd.qm
+translations\qtbase_he.qm
+translations\qtbase_hr.qm
+translations\qtbase_hu.qm
+translations\qtbase_it.qm
+translations\qtbase_ja.qm
+translations\qtbase_ka.qm
+translations\qtbase_ko.qm
+translations\qtbase_lg.qm
+translations\qtbase_lv.qm
+translations\qtbase_nl.qm
+translations\qtbase_nn.qm
+translations\qtbase_pl.qm
+translations\qtbase_pt_BR.qm
+translations\qtbase_ru.qm
+translations\qtbase_sk.qm
+translations\qtbase_sv.qm
+translations\qtbase_tr.qm
+translations\qtbase_uk.qm
+translations\qtbase_zh_CN.qm
+translations\qtbase_zh_TW.qm
+
+## Exclusions verified in dist/QuotaTray
+Qt Virtual Keyboard module/plugin/QML: none
+Qt QML / Quick modules: none
+Qt PDF modules: none
+Qt WebEngine: none
+Qt Graphs: none
+Qt GRPC: none
+Qt HTTP Server: none
+Qt MQTT: none
+Qt Network Authorization: none
+Qt SVG modules/plugins: none
+Qt OpenGL modules and opengl32sw renderer: none
+Other GPL-only Qt modules: none detected in the frozen payload
+Bundled ICU DLLs: none

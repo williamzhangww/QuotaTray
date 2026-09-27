@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "quotatray"
+dynamic = ["version"]
+description = "An unofficial Windows tray monitor for OpenAI Codex usage limits."
+requires-python = ">=3.10"
+dependencies = ["PySide6==6.11.2"]
+
+[project.scripts]
+quotatray = "codex_usage_monitor.main:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.dynamic]
+version = {attr = "codex_usage_monitor.version.__version__"}

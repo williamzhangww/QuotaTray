@@ -1,0 +1,7 @@
+#define MyAppName "QuotaTray"
+#define MyAppVersion "0.8.0"
+#define MyAppPublisher "QuotaTray Project"
+#define MyAppURL "https://github.com"
+#define MyAppDescription "An unofficial Windows tray monitor for OpenAI Codex usage limits."
+#define MyAppExeName "QuotaTray.exe"
+#define MyAppId "{F72E59D8-41C1-4A22-9DBA-14F8C331D292}"

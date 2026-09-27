@@ -1,0 +1,62 @@
+# Original upstream license material source map
+
+QtBase archive SHA256: 5b2e00eccaf5a4d8c14134ffa0ea8dfd0a35ae1ffc7f8d87fa4305a1ed23cf22
+PySide source archive SHA256: cba47efbaad1bedd529725cbc14e21f156c7a19366f07b3edfbb076ffd7afdf8
+All files are copied byte-for-byte from the archive member paths shown below.
+
+Destination filename	Archive	Archive member	SHA256
+sources__pyside6__COPYING	pyside-setup-everywhere-src-6.11.2.tar.xz	pyside-setup-everywhere-src-6.11.2/sources/pyside6/COPYING	3700b1c56fae3813dfaaef1cba101b6ec108167f36b19f4b2cc8824cc829aa2b
+sources__shiboken6__COPYING	pyside-setup-everywhere-src-6.11.2.tar.xz	pyside-setup-everywhere-src-6.11.2/sources/shiboken6/COPYING	9bf82b3636570e28118ee558ddab479b8f183d3e20327b7685a7479df52d6493
+sources__shiboken6__COPYING.libshiboken	pyside-setup-everywhere-src-6.11.2.tar.xz	pyside-setup-everywhere-src-6.11.2/sources/shiboken6/COPYING.libshiboken	902847d35abac99283b01c6bdd6f358d361de6bb1473c931756af8d68b890b2b
+LICENSES__Apache-2.0.txt	qtbase-everywhere-src-6.11.2.tar.xz	qtbase-everywhere-src-6.11.2/LICENSES/Apache-2.0.txt	e3ba223bb1423f0aad8c3dfce0fe3148db48926d41e6fbc3afbbf5ff9e1c89cb
+LICENSES__BSD-2-Clause.txt	qtbase-everywhere-src-6.11.2.tar.xz	qtbase-everywhere-src-6.11.2/LICENSES/BSD-2-Clause.txt	8fda146749ca071ac9cdce2e24d25444676ea48d1f9dccc2b7c15c054b717db8
+LICENSES__BSD-3-Clause.txt	qtbase-everywhere-src-6.11.2.tar.xz	qtbase-everywhere-src-6.11.2/LICENSES/BSD-3-Clause.txt	9f0490f18656c6f2435bd14f603ef0c96434d1825615363dce43abb42ed1dcce
+LICENSES__Bitstream-Vera.txt	qtbase-everywhere-src-6.11.2.tar.xz	qtbase-everywhere-src-6.11.2/LICENSES/Bitstream-Vera.txt	7a083b136e64d064794c3419751e5c7dd10d2f64c108fe5ba161eae5e5958a93
+LICENSES__CC0-1.0.txt	qtbase-everywhere-src-6.11.2.tar.xz	qtbase-everywhere-src-6.11.2/LICENSES/CC0-1.0.txt	a2010f343487d3f7618affe54f789f5487602331c0a8d03f49e9a7c547cf0499
+LICENSES__FTL.txt	qtbase-everywhere-src-6.11.2.tar.xz	qtbase-everywhere-src-6.11.2/LICENSES/FTL.txt	08c135755dd589039470f1fdbb400daaabaaa50d0b366d19cebff4d22986baa1
+LICENSES__GPL-2.0-only.txt	qtbase-everywhere-src-6.11.2.tar.xz	qtbase-everywhere-src-6.11.2/LICENSES/GPL-2.0-only.txt	8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643
+LICENSES__HPND.txt	qtbase-everywhere-src-6.11.2.tar.xz	qtbase-everywhere-src-6.11.2/LICENSES/HPND.txt	67ac968431270291f5e9cd3ed76705e1169f57082ee102093b2543b28cef63cf
+LICENSES__IJG.txt	qtbase-everywhere-src-6.11.2.tar.xz	qtbase-everywhere-src-6.11.2/LICENSES/IJG.txt	1cb448f5e2e6d3aca60943f4eee1a04675628dc0266a074a42bc1560ebc28d61
+LICENSES__Imlib2.txt	qtbase-everywhere-src-6.11.2.tar.xz	qtbase-everywhere-src-6.11.2/LICENSES/Imlib2.txt	8846f2baba1a7f4c36f7ca19a923a000d8a21afa37cf0fe006f6ce88a6058a89
+LICENSES__LicenseRef-BSD-3-Clause-with-PCRE2-Binary-Like-Packages-Exception.txt	qtbase-everywhere-src-6.11.2.tar.xz	qtbase-everywhere-src-6.11.2/LICENSES/LicenseRef-BSD-3-Clause-with-PCRE2-Binary-Like-Packages-Exception.txt	0526625fcc746a42d3f19a0ab357d3dc8479fdbe3bfd168825498f50215c7a63
+LICENSES__LicenseRef-ICC-License.txt	qtbase-everywhere-src-6.11.2.tar.xz	qtbase-everywhere-src-6.11.2/LICENSES/LicenseRef-ICC-License.txt	9e34ff47b3a44814e183342e7e198d127a6740e29d20e8381fba7688dafc79dd
+LICENSES__LicenseRef-Lcs-Telegraphics.txt	qtbase-everywhere-src-6.11.2.tar.xz	qtbase-everywhere-src-6.11.2/LICENSES/LicenseRef-Lcs-Telegraphics.txt	c10225ebbd5191bfdd761b0d7752c785f2453ab665d6c454473fb12d254668aa
+LICENSES__MIT.txt	qtbase-everywhere-src-6.11.2.tar.xz	qtbase-everywhere-src-6.11.2/LICENSES/MIT.txt	d040359701c01996a017d5c515678929cd1b0625e64cb86db44025fbb6cdf1fc
+LICENSES__MIT-Khronos-old.txt	qtbase-everywhere-src-6.11.2.tar.xz	qtbase-everywhere-src-6.11.2/LICENSES/MIT-Khronos-old.txt	3c58021633974f9ed3c3d445a374240a5244fd039628f4d7f6f3e674bc8e6694
+LICENSES__MIT-open-group.txt	qtbase-everywhere-src-6.11.2.tar.xz	qtbase-everywhere-src-6.11.2/LICENSES/MIT-open-group.txt	c55d2ab72d8a4f9e9cd8fbd1379268e575e8cfa16874affa5899b75a6d754514
+LICENSES__MPL-2.0.txt	qtbase-everywhere-src-6.11.2.tar.xz	qtbase-everywhere-src-6.11.2/LICENSES/MPL-2.0.txt	3f3d9e0024b1921b067d6f7f88deb4a60cbe7a78e76c64e3f1d7fc3b779b9d04
+LICENSES__Unicode-3.0.txt	qtbase-everywhere-src-6.11.2.tar.xz	qtbase-everywhere-src-6.11.2/LICENSES/Unicode-3.0.txt	80bb6294022d8764adb36a9d65ebb6bd94efb1865918a71e31e6c247607d7634
+LICENSES__X11.txt	qtbase-everywhere-src-6.11.2.tar.xz	qtbase-everywhere-src-6.11.2/LICENSES/X11.txt	e2936c6509784b4f0ec27bac74182393866fad9422b29a70e085ff14aba87193
+LICENSES__Zlib.txt	qtbase-everywhere-src-6.11.2.tar.xz	qtbase-everywhere-src-6.11.2/LICENSES/Zlib.txt	d7e3139972874dc8abdbbfce27ec1e6f942b28279dd7d27453630a8b4610e080
+LICENSES__libpng-2.0.txt	qtbase-everywhere-src-6.11.2.tar.xz	qtbase-everywhere-src-6.11.2/LICENSES/libpng-2.0.txt	7317e078e2d3b5d7ba5a6159e650945153262b44b76f6700f8e9edb261c5143e
+src__3rdparty__blake2__COPYING	qtbase-everywhere-src-6.11.2.tar.xz	qtbase-everywhere-src-6.11.2/src/3rdparty/blake2/COPYING	4103f471877ed0bae500752c5fcd7ecca409d4a4a8dc2ad40437daba60f1a2bc
+src__3rdparty__D3D12MemoryAllocator__LICENSE.txt	qtbase-everywhere-src-6.11.2.tar.xz	qtbase-everywhere-src-6.11.2/src/3rdparty/D3D12MemoryAllocator/LICENSE.txt	1b3941c52b26d42c510afbdf205a8b96a6d64f5a7b8ebff0287979fd91dfd52f
+src__3rdparty__double-conversion__LICENSE	qtbase-everywhere-src-6.11.2.tar.xz	qtbase-everywhere-src-6.11.2/src/3rdparty/double-conversion/LICENSE	4af93c12062c58058378de2397dc1c92bbff9ddfb1d583a01c84127557ce97ca
+src__3rdparty__easing__LICENSE	qtbase-everywhere-src-6.11.2.tar.xz	qtbase-everywhere-src-6.11.2/src/3rdparty/easing/LICENSE	92fac99458f1754b73edf50f9c9983e0efaa06ad96e2afd5e538c79f45b4b191
+src__3rdparty__forkfd__LICENSE	qtbase-everywhere-src-6.11.2.tar.xz	qtbase-everywhere-src-6.11.2/src/3rdparty/forkfd/LICENSE	d0d683ae18e78fbef90eb41168fb781920da2d12bf80704490f0882915c18ae0
+src__3rdparty__freetype__BDF-LICENSE.txt	qtbase-everywhere-src-6.11.2.tar.xz	qtbase-everywhere-src-6.11.2/src/3rdparty/freetype/BDF-LICENSE.txt	e4e792f29e66750f2e410fd7b50a567652c180f6ee15e1a4dfa0bb5cde524537
+src__3rdparty__freetype__PCF-LICENSE.txt	qtbase-everywhere-src-6.11.2.tar.xz	qtbase-everywhere-src-6.11.2/src/3rdparty/freetype/PCF-LICENSE.txt	6938597bfdeca0db191a8f9ede52eaf2482c2c71a0094c084747a1235f9958fe
+src__3rdparty__freetype__LICENSE.txt	qtbase-everywhere-src-6.11.2.tar.xz	qtbase-everywhere-src-6.11.2/src/3rdparty/freetype/LICENSE.txt	bf543cdda11864477b8d2ca2aa9afc2aaa8f9133461b4d962ed6ec73646256a1
+src__3rdparty__freetype__ZLIB-LICENSE.txt	qtbase-everywhere-src-6.11.2.tar.xz	qtbase-everywhere-src-6.11.2/src/3rdparty/freetype/ZLIB-LICENSE.txt	2b1f5d615382a151af3eb71462ad17d89e2efee8fa7664058d35d3d9237ebb19
+src__3rdparty__freetype__docs__FTL.TXT	qtbase-everywhere-src-6.11.2.tar.xz	qtbase-everywhere-src-6.11.2/src/3rdparty/freetype/docs/FTL.TXT	5a5ee54c5001bbad1cdc1a57cc3dd4c42199b2da09d39c7ee41fab002d02967f
+src__3rdparty__freetype__docs__GPLv2.TXT	qtbase-everywhere-src-6.11.2.tar.xz	qtbase-everywhere-src-6.11.2/src/3rdparty/freetype/docs/GPLv2.TXT	c4120c6752c910c299e3bd9cb3a46ff262c268303ca2069b61f92f10a5656c18
+src__3rdparty__harfbuzz-ng__COPYING	qtbase-everywhere-src-6.11.2.tar.xz	qtbase-everywhere-src-6.11.2/src/3rdparty/harfbuzz-ng/COPYING	ba8f810f2455c2f08e2d56bb49b72f37fcf68f1f4fade38977cfd7372050ad64
+src__3rdparty__libjpeg__LICENSE	qtbase-everywhere-src-6.11.2.tar.xz	qtbase-everywhere-src-6.11.2/src/3rdparty/libjpeg/LICENSE	ba6bceebcba0fdd35488477c2cca8c4632ce82c74dbfbc87d886ce6fc4433579
+src__3rdparty__libjpeg__ijg-license.txt	qtbase-everywhere-src-6.11.2.tar.xz	qtbase-everywhere-src-6.11.2/src/3rdparty/libjpeg/ijg-license.txt	1cb448f5e2e6d3aca60943f4eee1a04675628dc0266a074a42bc1560ebc28d61
+src__3rdparty__libpng__LICENSE	qtbase-everywhere-src-6.11.2.tar.xz	qtbase-everywhere-src-6.11.2/src/3rdparty/libpng/LICENSE	bdb0a645ea18c60507d0368379b1ac5474b92255fcc2d115e07486a7672ba526
+src__3rdparty__libpsl__PSL-LICENSE.txt	qtbase-everywhere-src-6.11.2.tar.xz	qtbase-everywhere-src-6.11.2/src/3rdparty/libpsl/PSL-LICENSE.txt	3f3d9e0024b1921b067d6f7f88deb4a60cbe7a78e76c64e3f1d7fc3b779b9d04
+src__3rdparty__libpsl__src__LICENSE.chromium	qtbase-everywhere-src-6.11.2.tar.xz	qtbase-everywhere-src-6.11.2/src/3rdparty/libpsl/src/LICENSE.chromium	1d7f52747a9169751cdf2641a8299c0098e9ecdf9429296ffd55bdb14c9ed5b3
+src__3rdparty__md4c__LICENSE.md	qtbase-everywhere-src-6.11.2.tar.xz	qtbase-everywhere-src-6.11.2/src/3rdparty/md4c/LICENSE.md	d30937367d5413e7eaa218b1640b8946ff76fd34d97152f6979fd96169d5d0fc
+src__3rdparty__pcre2__LICENSE-SLJIT	qtbase-everywhere-src-6.11.2.tar.xz	qtbase-everywhere-src-6.11.2/src/3rdparty/pcre2/LICENSE-SLJIT	5f216505c0f6ea3273caec89e766eef93cdeb7bbb0c429f9360116d7c938feeb
+src__3rdparty__pixman__LICENSE	qtbase-everywhere-src-6.11.2.tar.xz	qtbase-everywhere-src-6.11.2/src/3rdparty/pixman/LICENSE	942c4f2a80394d3f53599b8382e9f27349b95c45d92b69b84f26d404f4dd74a5
+src__3rdparty__rfc6234__LICENSE	qtbase-everywhere-src-6.11.2.tar.xz	qtbase-everywhere-src-6.11.2/src/3rdparty/rfc6234/LICENSE	7ccebd514aaabc86192f957d773cebf06577c12fe9f25ecd419c6cac5da7a14c
+src__3rdparty__sha3__BRG_ENDIAN_LICENSE	qtbase-everywhere-src-6.11.2.tar.xz	qtbase-everywhere-src-6.11.2/src/3rdparty/sha3/BRG_ENDIAN_LICENSE	2fed6f252ca4a7e813811de3cd3cd08183edd4138bdee909410ef6eee394e82c
+src__3rdparty__sha3__CC0_LICENSE	qtbase-everywhere-src-6.11.2.tar.xz	qtbase-everywhere-src-6.11.2/src/3rdparty/sha3/CC0_LICENSE	1f2786e2c5befeb4dcba6638db6528bf96ef5d2cf24bc85ab5a81ef00abef59d
+src__3rdparty__tinycbor__LICENSE	qtbase-everywhere-src-6.11.2.tar.xz	qtbase-everywhere-src-6.11.2/src/3rdparty/tinycbor/LICENSE	3c6ba0b5bfa7830505301ffb336a17b0748e0d61c4d34216e9dc98f10e40395e
+src__3rdparty__zlib__LICENSE	qtbase-everywhere-src-6.11.2.tar.xz	qtbase-everywhere-src-6.11.2/src/3rdparty/zlib/LICENSE	d7e3139972874dc8abdbbfce27ec1e6f942b28279dd7d27453630a8b4610e080
+src__3rdparty__icc__LICENSE.txt	qtbase-everywhere-src-6.11.2.tar.xz	qtbase-everywhere-src-6.11.2/src/3rdparty/icc/LICENSE.txt	9e34ff47b3a44814e183342e7e198d127a6740e29d20e8381fba7688dafc79dd
+src__gui__opengl__LICENSE.KHRONOS.txt	qtbase-everywhere-src-6.11.2.tar.xz	qtbase-everywhere-src-6.11.2/src/gui/opengl/LICENSE.KHRONOS.txt	2e484f3c26ff5008c704a3ca9dd809d43f24a004a1abb6c202660fbff0d19715
+src__gui__painting__LICENSE.QIMAGETRANSFORM.txt	qtbase-everywhere-src-6.11.2.tar.xz	qtbase-everywhere-src-6.11.2/src/gui/painting/LICENSE.QIMAGETRANSFORM.txt	46b3cbfa2f2946b93291506351e9be1dd0a28d2a53260f5aa488abd36fbeca9d
+src__gui__rhi__LICENSE.MiniEngine.txt	qtbase-everywhere-src-6.11.2.tar.xz	qtbase-everywhere-src-6.11.2/src/gui/rhi/LICENSE.MiniEngine.txt	cf248820bf1178370bb4f1670a59f8748d46bc96d0f64080cd631511c6046409
+src__gui__text__LICENSE.AGLFN.txt	qtbase-everywhere-src-6.11.2.tar.xz	qtbase-everywhere-src-6.11.2/src/gui/text/LICENSE.AGLFN.txt	40818155548ff41c67d3a40edf355e9658992b292c227f4c1147425cedc746c6
+src__gui__vulkan__LICENSE.txt	qtbase-everywhere-src-6.11.2.tar.xz	qtbase-everywhere-src-6.11.2/src/gui/vulkan/LICENSE.txt	5f618873b0cdd1e84c611c5529212c2524bfc887bdfd7d1f3b568bad3c649612
