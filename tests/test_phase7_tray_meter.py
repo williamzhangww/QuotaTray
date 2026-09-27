@@ -45,6 +45,7 @@ def test_tray_meter_tooltip_uses_remaining_for_primary_and_weekly() -> None:
     assert "5-hour remaining: 22%" in view.tooltip
     assert "Weekly remaining: 72%" in view.tooltip
     assert "used" not in view.tooltip.lower()
+    _assert_tooltip_has_no_update_timestamp(view.tooltip)
 
 
 def test_tray_meter_tooltip_reset_countdowns() -> None:
@@ -54,6 +55,22 @@ def test_tray_meter_tooltip_reset_countdowns() -> None:
     assert "Resets in 2h 48m" in view.tooltip
     assert "Resets in 6d 16h" in view.tooltip
     assert "2026-" not in view.tooltip
+    _assert_tooltip_has_no_update_timestamp(view.tooltip)
+
+
+def test_tray_meter_tooltip_has_no_update_line_or_trailing_blank_lines() -> None:
+    now = datetime(2026, 8, 26, 12, tzinfo=timezone.utc)
+    view = build_tray_meter_view(_usage(now, 78, 28), 5, now, now=now)
+
+    assert view.tooltip == (
+        "QuotaTray\n\n"
+        "5-hour remaining: 22%\n"
+        "Resets in 2h 48m\n\n"
+        "Weekly remaining: 72%\n"
+        "Resets in 6d 16h"
+    )
+    assert not view.tooltip.endswith("\n")
+    _assert_tooltip_has_no_update_timestamp(view.tooltip)
 
 
 def test_tray_meter_stale_tooltip() -> None:
@@ -62,6 +79,7 @@ def test_tray_meter_stale_tooltip() -> None:
 
     assert view.remaining_percent == 22
     assert "Data may be stale" in view.tooltip
+    _assert_tooltip_has_no_update_timestamp(view.tooltip)
 
 
 def test_tray_meter_failed_tooltip_keeps_last_number() -> None:
@@ -70,14 +88,16 @@ def test_tray_meter_failed_tooltip_keeps_last_number() -> None:
 
     assert view.remaining_percent == 22
     assert "Update failed" in view.tooltip
+    _assert_tooltip_has_no_update_timestamp(view.tooltip)
 
 
 def test_tray_meter_reset_credit_tooltip() -> None:
     now = datetime(2026, 8, 26, 12, tzinfo=timezone.utc)
     view = build_tray_meter_view(_usage(now, 78, 28, reset_credits=1), 5, now, now=now)
 
-    assert "Reset credit: 1" in view.tooltip
+    assert view.tooltip.endswith("Reset credit: 1")
     assert "Reset credit: 1 available" not in view.tooltip
+    _assert_tooltip_has_no_update_timestamp(view.tooltip)
 
 
 def test_tray_meter_reset_credit_plural_tooltip() -> None:
@@ -85,6 +105,7 @@ def test_tray_meter_reset_credit_plural_tooltip() -> None:
     view = build_tray_meter_view(_usage(now, 78, 28, reset_credits=2), 5, now, now=now)
 
     assert "Reset credits: 2" in view.tooltip
+    _assert_tooltip_has_no_update_timestamp(view.tooltip)
 
 
 def test_tray_meter_hides_missing_reset_credit() -> None:
@@ -92,6 +113,8 @@ def test_tray_meter_hides_missing_reset_credit() -> None:
     view = build_tray_meter_view(_usage(now, 78, 28), 5, now, now=now)
 
     assert "Reset credit" not in view.tooltip
+    assert view.tooltip.endswith("Resets in 6d 16h")
+    _assert_tooltip_has_no_update_timestamp(view.tooltip)
 
 
 def test_tray_meter_no_data_loading_state() -> None:
@@ -233,7 +256,7 @@ def test_effective_quota(primary, weekly, expected) -> None:
     assert ("5-hour remaining:" in view.tooltip) == (weekly < 100)
     assert f"Weekly remaining: {max(0, 100 - weekly)}%" in view.tooltip
     assert "Resets in 6d 16h" in view.tooltip
-    assert "Updated just now" in view.tooltip
+    _assert_tooltip_has_no_update_timestamp(view.tooltip)
     assert "Reset credit: 1" in view.tooltip
 
 
@@ -243,6 +266,8 @@ def test_weekly_recovery_restores_primary() -> None:
     assert [v.remaining_percent for v in views] == [0, 60]
     assert "5-hour" not in views[0].tooltip
     assert "5-hour remaining: 60%" in views[1].tooltip
+    assert views[0].tooltip == "QuotaTray\n\nWeekly remaining: 0%\nResets in 6d 16h"
+    _assert_tooltip_has_no_update_timestamp(views[0].tooltip)
 
 
 @pytest.mark.parametrize("secondary", [None, UsageWindow()])
@@ -252,6 +277,7 @@ def test_missing_weekly_does_not_override_primary(secondary) -> None:
     assert view.remaining_percent == 60
     assert "5-hour remaining: 60%" in view.tooltip
     assert "Weekly remaining: unknown" in view.tooltip
+    _assert_tooltip_has_no_update_timestamp(view.tooltip)
 
 
 def _usage(
@@ -265,3 +291,8 @@ def _usage(
         secondary=UsageWindow(weekly_used, 10080, now + timedelta(days=6, hours=16)),
         reset_credits=RateLimitResetCredits(reset_credits, ()),
     )
+
+
+def _assert_tooltip_has_no_update_timestamp(tooltip: str) -> None:
+    for forbidden in ("Updated just now", "Updated", "Last updated"):
+        assert forbidden not in tooltip

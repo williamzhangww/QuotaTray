@@ -63,17 +63,15 @@ def build_tray_meter_tooltip(
     lines = ["QuotaTray", ""]
     if window_remaining_percent(usage.secondary) != 0:
         lines.extend([_window_tooltip("5-hour", usage.primary, now), ""])
-    lines.extend([
-        _window_tooltip("Weekly", usage.secondary, now),
-        "",
-        status.text,
-    ])
+    lines.append(_window_tooltip("Weekly", usage.secondary, now))
+    if refresh_failed:
+        lines.extend(["", status.text])
+    elif status.is_stale or (usage.stale and usage.error):
+        lines.extend(["", "Data may be stale"])
     if usage.reset_credits and usage.reset_credits.available_count > 0:
         count = usage.reset_credits.available_count
         label = "Reset credit" if count == 1 else "Reset credits"
         lines.extend(["", f"{label}: {count}"])
-    if usage.stale and usage.error and not refresh_failed:
-        lines.extend(["", "Data may be stale"])
     return "\n".join(lines)
 
 
