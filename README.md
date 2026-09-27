@@ -23,7 +23,7 @@ The tray icon displays the 5-hour remaining percentage. Its tooltip shows 5-hour
 
 ## Download and install
 
-Download `QuotaTray-<version>-Setup.exe` from the project GitHub Releases page. The installer is per-user and does not require administrator rights. It currently has no Authenticode signature. Verify the file hash against the SHA256 value published with that release before running it.
+Download `QuotaTray-0.8.1-Setup.exe` from the [QuotaTray v0.8.1 GitHub Release](https://github.com/williamzhangww/QuotaTray/releases/tag/v0.8.1). The installer is per-user and does not require administrator rights. It is unsigned, so Windows SmartScreen may display a warning. Verify the installer against `SHA256SUMS.txt` from the same release before running it.
 
 The installer is per user and installs to `%LOCALAPPDATA%\Programs\QuotaTray`. If an earlier QuotaTray version is registered in a different location, uninstall it first and then run the installer. The v0.8.1 clean namespace does not migrate data from earlier versions.
 
@@ -74,7 +74,7 @@ Uninstall QuotaTray from Windows Installed Apps / Apps & Features. The uninstall
 
 - If quota is unavailable, install and sign in to Codex under the same Windows account, then confirm `codex.exe` can be found. Use Settings to choose the executable if auto-detection fails.
 - If the tray icon is hidden, enable it in Windows Taskbar system tray icon settings.
-- If the installer is blocked or warns that its publisher is unknown, verify its SHA256 against the value published for that release. The current installer is unsigned.
+- If the installer is blocked or warns that its publisher is unknown, verify its SHA256 against `SHA256SUMS.txt` on the [v0.8.1 release page](https://github.com/williamzhangww/QuotaTray/releases/tag/v0.8.1).
 - For security issues, follow [SECURITY.md](SECURITY.md).
 
 ## Verify SHA256
@@ -82,7 +82,7 @@ Uninstall QuotaTray from Windows Installed Apps / Apps & Features. The uninstall
 In PowerShell, compare the downloaded installer hash with the SHA256 value published on its GitHub Release page:
 
 ```powershell
-(Get-FileHash .\QuotaTray-<version>-Setup.exe -Algorithm SHA256).Hash
+(Get-FileHash .\QuotaTray-0.8.1-Setup.exe -Algorithm SHA256).Hash
 ```
 
 The result should exactly match the release value.
@@ -111,7 +111,7 @@ QuotaTray source code is licensed under the MIT License; see [LICENSE](LICENSE).
 
 ## Third-party licenses
 
-The Windows binary bundles third-party components. See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) and `licenses/` for the runtime inventory, notices, attribution coverage, and license texts. Qt/PySide6 are dynamically linked and distributed as replaceable DLLs. The QuotaTray v0.8.0 GitHub Release provides the corresponding QtBase and Qt for Python source archives as release assets; their official Qt origins and SHA256 values are documented in `THIRD_PARTY_NOTICES.md`.
+The Windows binary bundles third-party components. See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) and `licenses/` for the runtime inventory, notices, attribution coverage, and license texts. Qt/PySide6 are dynamically linked and distributed as replaceable DLLs. The QuotaTray v0.8.1 GitHub Release provides the corresponding QtBase and Qt for Python source archives as release assets; their official Qt origins and SHA256 values are documented in `THIRD_PARTY_NOTICES.md`.
 
 ## Disclaimer
 

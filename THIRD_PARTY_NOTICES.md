@@ -1,6 +1,6 @@
 # Third-party notices
 
-This inventory describes the QuotaTray 0.8.0 Windows x64 frozen payload produced with Python 3.10.11 and a controlled build PATH. It is a factual package inventory, not legal advice or a compliance certification. Component/source correspondence is checked against PyInstaller's COLLECT TOC, file version metadata, and PE import tables. The latest clean frozen build has 27 native DLL/PYD items and passed the provenance guard.
+This inventory describes the QuotaTray 0.8.1 Windows x64 frozen payload produced with Python 3.10.11 and a controlled build PATH. It is a factual package inventory, not legal advice or a compliance certification. Component/source correspondence is checked against PyInstaller's COLLECT TOC, file version metadata, and PE import tables. The latest clean frozen build has 27 native DLL/PYD items and passed the provenance guard.
 
 ## Microsoft Visual C++ Redistributable (x64) system prerequisite / not bundled
 
@@ -12,7 +12,7 @@ QuotaTray application source is licensed under MIT; see the repository-root `LIC
 
 ## Qt and Qt for Python
 
-QuotaTray dynamically links to Qt 6.11.2 through PySide6 6.11.2 and shiboken6 6.11.2. The installed v0.8.0 payload contains `Qt6Core.dll`, `Qt6Gui.dll`, `Qt6Widgets.dll`, `Qt6Network.dll`; PySide6 modules `QtCore.pyd`, `QtGui.pyd`, `QtWidgets.pyd`, `QtNetwork.pyd`; bindings `pyside6.abi3.dll`, `Shiboken.pyd`, `shiboken6.abi3.dll`; and plugins `qwindows.dll`, `qico.dll`, `qmodernwindowsstyle.dll`. The exact list is in `licenses/Qt-6.11.2-runtime-manifest.txt`.
+QuotaTray dynamically links to Qt 6.11.2 through PySide6 6.11.2 and shiboken6 6.11.2. The installed v0.8.1 payload contains `Qt6Core.dll`, `Qt6Gui.dll`, `Qt6Widgets.dll`, `Qt6Network.dll`; PySide6 modules `QtCore.pyd`, `QtGui.pyd`, `QtWidgets.pyd`, `QtNetwork.pyd`; bindings `pyside6.abi3.dll`, `Shiboken.pyd`, `shiboken6.abi3.dll`; and plugins `qwindows.dll`, `qico.dll`, `qmodernwindowsstyle.dll`. The exact list is in `licenses/Qt-6.11.2-runtime-manifest.txt`.
 
 The PySide6 6.11.2 and shiboken6 6.11.2 wheel metadata declares `LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only`. This distribution uses the LGPLv3 option for the dynamically linked Qt/PySide6 components; `licenses/LGPL-3.0.txt` contains the GNU license text. The original PySide/shiboken source notices are retained under `licenses/Qt-6.11.2-third-party/`. No standalone GPL-only Qt module is present in the installed payload. The app's MIT license does not replace any third-party terms.
 
@@ -33,18 +33,18 @@ The corresponding original Qt license texts and source notices are included unde
 
 Acknowledgement: QuotaTray uses Qt 6.11.2 and Qt for Python (PySide6/shiboken6) 6.11.2 from The Qt Company. Qt and Qt for Python are dynamically linked as replaceable DLLs in the per-user install directory; the installer does not intentionally prevent replacement.
 
-For QuotaTray v0.8.0, the corresponding source archives are provided as assets with the QuotaTray GitHub Release:
+For QuotaTray v0.8.1, the corresponding source archives are provided as assets with the QuotaTray GitHub Release:
 
-| Exact source archive | Official Qt download origin | SHA256 |
-|---|---|---|
-| `qtbase-everywhere-src-6.11.2.tar.xz` | [Qt 6.11.2 QtBase submodule archive](https://download.qt.io/archive/qt/6.11/6.11.2/submodules/qtbase-everywhere-src-6.11.2.tar.xz) | `5b2e00eccaf5a4d8c14134ffa0ea8dfd0a35ae1ffc7f8d87fa4305a1ed23cf22` |
-| `pyside-setup-everywhere-src-6.11.2.tar.xz` | [Qt for Python 6.11.2 source archive](https://download.qt.io/official_releases/QtForPython/pyside6/PySide6-6.11.2-src/pyside-setup-everywhere-src-6.11.2.tar.xz) | `cba47efbaad1bedd529725cbc14e21f156c7a19366f07b3edfbb076ffd7afdf8` |
+| Exact source archive | Official Qt download origin | Size (bytes) | SHA256 |
+|---|---|---:|---|
+| `qtbase-everywhere-src-6.11.2.tar.xz` | [Qt 6.11.2 QtBase submodule archive](https://download.qt.io/archive/qt/6.11/6.11.2/submodules/qtbase-everywhere-src-6.11.2.tar.xz) | 50582668 | `5b2e00eccaf5a4d8c14134ffa0ea8dfd0a35ae1ffc7f8d87fa4305a1ed23cf22` |
+| `pyside-setup-everywhere-src-6.11.2.tar.xz` | [Qt for Python 6.11.2 source archive](https://download.qt.io/official_releases/QtForPython/pyside6/PySide6-6.11.2-src/pyside-setup-everywhere-src-6.11.2.tar.xz) | 18053248 | `cba47efbaad1bedd529725cbc14e21f156c7a19366f07b3edfbb076ffd7afdf8` |
 
-The verified source archives are staged in the v0.8.0 release asset bundle alongside the installer. Keep both archives attached to the QuotaTray v0.8.0 GitHub Release when it is created; the README points users to those project-hosted assets.
+These exact official Qt source archives accompany the QuotaTray v0.8.1 installer as GitHub Release assets. Their published byte sizes and SHA256 digests must match this table and `licenses/Qt-6.11.2-third-party/SOURCE-MAP.txt`.
 
 ## Runtime component inventory
 
-The exact component, filename, observed version, provenance, license status, and bundle status are recorded in [`licenses/QuotaTray-0.8.0-runtime-inventory.md`](licenses/QuotaTray-0.8.0-runtime-inventory.md). The Qt filename inventory, including all shipped Qt translations, is in [`licenses/Qt-6.11.2-runtime-manifest.txt`](licenses/Qt-6.11.2-runtime-manifest.txt).
+The exact component, filename, observed version, provenance, license status, and bundle status are recorded in [`licenses/QuotaTray-0.8.1-runtime-inventory.md`](licenses/QuotaTray-0.8.1-runtime-inventory.md). The Qt filename inventory, including all shipped Qt translations, is in [`licenses/Qt-6.11.2-runtime-manifest.txt`](licenses/Qt-6.11.2-runtime-manifest.txt).
 
 ## License and notice files in this repository
 
@@ -55,7 +55,7 @@ The exact component, filename, observed version, provenance, license status, and
 - `licenses/PyInstaller-COPYING.txt`: PyInstaller 6.22.3 wheel's original `licenses/COPYING.txt`, including the GPL-2.0-or-later bootloader exception and Apache-2.0 runtime-hook notice. The exception must remain applicable to the shipped bootloader.
 - `licenses/PyInstaller-hooks-contrib-LICENSE.txt`: original license from pyinstaller-hooks-contrib 2026.7 wheel metadata; this is build-time tooling, not a runtime dependency.
 - `licenses/Qt-6.11.2-runtime-manifest.txt`: exact shipped Qt DLLs, Python extension modules, plugins, and translations.
-- `licenses/QuotaTray-0.8.0-runtime-inventory.md`: observed binary versions, PE dependencies, provenance review, the system VC runtime prerequisite, and excluded optional Python TLS modules.
+- `licenses/QuotaTray-0.8.1-runtime-inventory.md`: observed binary versions, PE dependencies, provenance review, the system VC runtime prerequisite, and excluded optional Python TLS modules.
 
 No standalone GPL-only Qt component is shipped. The LGPLv3 terms are the selected distribution route; the LGPL text refers to GPL terms as part of its own terms. Because an exact Windows wheel/build SBOM is not available, the module-level attribution table is conservative and must be checked again for future builds.
 
@@ -75,10 +75,8 @@ The new COLLECT TOC and final frozen payload contain no app-local `ucrtbase.dll`
 
 The Windows setup executable is generated with Inno Setup 7.1.0. The project distributes the generated QuotaTray installer, not the Inno Setup compiler or development environment. Inno Setup's applicable license permits use for any purpose including commercial applications (owner-verified for this task); acknowledgement is appreciated but not required. The installer is not itself licensed under the QuotaTray MIT license.
 
-## Remaining release review
+## Maintenance notes
 
-- Reconcile future Qt modules, plugins, translations, bundled third-party notices, and their LGPLv3 mapping against the exact build SBOM whenever the build configuration changes.
-- Keep the exact corresponding Qt 6.11.2 and PySide6/shiboken6 6.11.2 source archives attached to the QuotaTray v0.8.0 GitHub Release when it is published.
-- Confirm Microsoft Visual C++ Redistributable prerequisite wording/version policy against official release guidance before publication.
-- Verify the exact PyInstaller bootloader exception notice against the shipped bootloader build.
-- Complete a fresh release-specific runtime and upgrade verification for this rebuilt installer.
+- Reconcile future Qt modules, plugins, translations, bundled third-party notices, and their LGPLv3 mapping against the exact build inventory whenever the build configuration changes.
+- Keep the exact Qt 6.11.2 and PySide6/shiboken6 6.11.2 source archives attached to the QuotaTray v0.8.1 GitHub Release. Their official URLs and hashes are recorded above.
+- Revalidate the Microsoft Visual C++ Redistributable prerequisite policy and PyInstaller bootloader exception notice when the supported build environment changes.

@@ -1,31 +1,35 @@
 # QuotaTray 0.8.1
 
-## Highlights
-
-- Standardizes program, data, startup, and single-instance paths under the QuotaTray name.
-- Requires uninstalling an earlier version registered in a different install location before setup can continue.
-- Does not migrate settings or quota history from earlier versions.
-
-# QuotaTray 0.8.0
-
-QuotaTray is an unofficial Windows tray monitor for OpenAI Codex usage limits.
+An unofficial Windows tray monitor for OpenAI Codex usage limits.
 
 ## Highlights
 
-- Shows the remaining five-hour quota in the tray icon and weekly quota in the tooltip.
-- Supports the weekly exhausted display override and local Codex App Server integration.
-- Stores quota history locally in SQLite.
-- Does not parse `auth.json`, access browser cookies, or send QuotaTray telemetry.
-- Installs per user on Windows x64.
+- Shows remaining 5-hour quota directly in the Windows tray icon and Weekly quota in the tooltip.
+- Shows `0` in the tray when the Weekly quota is exhausted.
+- Displays reset credits when available.
+- Stores quota history and settings locally under `%LOCALAPPDATA%\QuotaTray`.
+- Reads quota through the local Codex App Server `account/rateLimits/read` method.
+- Uses the clean QuotaTray program and data namespace. It does not migrate settings or history from earlier product versions.
 
 ## Requirements
 
 - Windows x64.
 - OpenAI Codex installed and authenticated for the same Windows user.
-- Microsoft Visual C++ Redistributable x64 14.44 or newer.
+- Microsoft Visual C++ Redistributable x64, version 14.44 or newer.
 
-## Distribution notes
+## Privacy
 
-The installer is currently unsigned, so Windows SmartScreen may display a warning. Verify the installer against `SHA256SUMS.txt` from the QuotaTray v0.8.0 GitHub Release.
+QuotaTray does not read Codex `auth.json` credentials or browser cookies. It does not collect prompts, conversations, source code, or user files. QuotaTray has no first-party telemetry.
 
-QuotaTray is an unofficial third-party project and is not affiliated with or endorsed by OpenAI. QuotaTray source is licensed under MIT. Third-party components retain their respective licenses; see `THIRD_PARTY_NOTICES.md` and `licenses/`.
+## Installer
+
+- File: `QuotaTray-0.8.1-Setup.exe`
+- SHA256: `61C748DB389492447F8ACCB764FA16C646159C46240B2C392436942DAB47C4C0`
+- The installer is unsigned. Windows SmartScreen may display a warning.
+- Verify the download against `SHA256SUMS.txt` on the [v0.8.1 GitHub Release](https://github.com/williamzhangww/QuotaTray/releases/tag/v0.8.1).
+
+The Qt and PySide6 LGPL source archives corresponding to the bundled runtime are included with the release. QuotaTray source code is licensed under MIT; third-party components retain their respective licenses.
+
+## Disclaimer
+
+QuotaTray is an independent, unofficial third-party project. It is not affiliated with, endorsed by, or sponsored by OpenAI.

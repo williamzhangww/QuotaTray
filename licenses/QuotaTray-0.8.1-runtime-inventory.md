@@ -1,6 +1,6 @@
-# QuotaTray 0.8.0 runtime component inventory
+# QuotaTray 0.8.1 runtime component inventory
 
-Scope: Windows x64 public-prep frozen payload. The checked clean build contains 27 native DLL/PYD items. Source provenance is checked from the PyInstaller COLLECT TOC by `tools/verify_frozen.py`.
+Scope: QuotaTray 0.8.1 Windows x64 release frozen payload. The checked clean build contains 27 native DLL/PYD items. Source provenance is checked from the PyInstaller COLLECT TOC by `tools/verify_frozen.py`.
 
 ## Required native runtime
 

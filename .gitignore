@@ -9,3 +9,11 @@ release/
 # Local third-party build tools; Inno Setup is an external prerequisite.
 tools/inno/
 .userdata-backup-*/
+# Local credentials and user data
+.env
+.env.*
+auth.json
+usage.db
+logs/
+settings/
+*.log
