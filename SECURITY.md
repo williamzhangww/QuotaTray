@@ -12,7 +12,7 @@ Security fixes are intended for the latest public stable release.
 
 Current public stable release:
 
-- QuotaTray 0.8.1
+- QuotaTray 0.8.2
 
 ## Scope
 

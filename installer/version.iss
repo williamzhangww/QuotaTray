@@ -1,5 +1,5 @@
 #define MyAppName "QuotaTray"
-#define MyAppVersion "0.8.1"
+#define MyAppVersion "0.8.2"
 #define MyAppPublisher "QuotaTray Project"
 #define MyAppURL "https://github.com"
 #define MyAppDescription "An unofficial Windows tray monitor for OpenAI Codex usage limits."

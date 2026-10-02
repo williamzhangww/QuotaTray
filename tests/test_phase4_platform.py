@@ -98,7 +98,7 @@ def test_log_initialization(monkeypatch, tmp_path) -> None:
 
 
 def test_version_source() -> None:
-    assert __version__ == "0.8.1"
+    assert __version__ == "0.8.2"
 
 
 def test_single_instance_server_name() -> None:

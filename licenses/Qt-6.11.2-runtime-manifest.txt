@@ -1,6 +1,6 @@
 # Frozen Qt/PySide6 runtime manifest
 
-Generated from the verified QuotaTray 0.8.1 dist/QuotaTray release payload. Build environment: Windows x64, PySide6 6.11.2, shiboken6 6.11.2, Qt 6.11.2. This is a filename inventory, not a license determination.
+Generated from the verified QuotaTray 0.8.2 dist/QuotaTray release payload. Build environment: Windows x64, PySide6 6.11.2, shiboken6 6.11.2, Qt 6.11.2. This is a filename inventory, not a license determination.
 
 ## Qt shared libraries
 Qt6Core.dll

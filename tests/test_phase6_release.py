@@ -20,9 +20,9 @@ from tools.generate_release_metadata import _installer_version_text, _version_in
 def test_release_version_consistency() -> None:
     metadata = release_metadata()
 
-    assert __version__ == "0.8.1"
+    assert __version__ == "0.8.2"
     assert metadata.version == __version__
-    assert version_tuple() == (0, 8, 1, 0)
+    assert version_tuple() == (0, 8, 2, 0)
 
 
 def test_installer_rejects_legacy_registered_install_location() -> None:
