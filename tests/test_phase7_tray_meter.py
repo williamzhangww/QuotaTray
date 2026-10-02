@@ -191,6 +191,11 @@ def test_tray_meter_icon_rendering_three_digit_100(qapp) -> None:
     assert icon.isNull() is False
 
 
+def test_tray_meter_icon_rendering_alert(qapp) -> None:
+    icon = render_remaining_icon(9, alert=True, dpr=1.0)
+    assert icon.isNull() is False
+
+
 def test_legacy_widget_settings_are_ignored_without_rewrite(tmp_path) -> None:
     path = tmp_path / "settings.ini"
     original = (
@@ -248,11 +253,17 @@ def test_window_remaining_handles_missing_window() -> None:
     assert window_remaining_percent(None) is None
 
 
-@pytest.mark.parametrize("primary,weekly,expected", [(0, 0, 100), (40, 30, 60), (0, 100, 0), (70, 100, 0), (0, 125, 0), (0, 99, 100), (100, 30, 0)])
-def test_effective_quota(primary, weekly, expected) -> None:
+@pytest.mark.parametrize(
+    "primary,weekly,expected,alert",
+    [(78, 89, 22, False), (78, 90, 22, False), (78, 91, 9, True),
+     (78, 99, 1, True), (78, 100, 0, True), (100, 30, 0, False),
+     (40, 70, 60, False), (0, 70, 100, False)],
+)
+def test_effective_quota(primary, weekly, expected, alert) -> None:
     now = datetime(2026, 8, 26, 12, tzinfo=timezone.utc)
     view = build_tray_meter_view(_usage(now, primary, weekly, reset_credits=1), 5, now, now=now)
     assert view.remaining_percent == expected
+    assert view.low_weekly is alert
     assert ("5-hour remaining:" in view.tooltip) == (weekly < 100)
     assert f"Weekly remaining: {max(0, 100 - weekly)}%" in view.tooltip
     assert "Resets in 6d 16h" in view.tooltip
@@ -262,11 +273,13 @@ def test_effective_quota(primary, weekly, expected) -> None:
 
 def test_weekly_recovery_restores_primary() -> None:
     now = datetime(2026, 8, 26, 12, tzinfo=timezone.utc)
-    views = [build_tray_meter_view(_usage(now, 40, weekly), 5, now, now=now) for weekly in (100, 99)]
-    assert [v.remaining_percent for v in views] == [0, 60]
-    assert "5-hour" not in views[0].tooltip
+    views = [build_tray_meter_view(_usage(now, 40, weekly), 5, now, now=now) for weekly in (91, 90)]
+    assert [v.remaining_percent for v in views] == [9, 60]
+    assert [v.low_weekly for v in views] == [True, False]
+    assert "5-hour remaining: 60%" in views[0].tooltip
     assert "5-hour remaining: 60%" in views[1].tooltip
-    assert views[0].tooltip == "QuotaTray\n\nWeekly remaining: 0%\nResets in 6d 16h"
+    assert "Weekly remaining: 9%" in views[0].tooltip
+    assert "Weekly remaining: 10%" in views[1].tooltip
     _assert_tooltip_has_no_update_timestamp(views[0].tooltip)
 
 
@@ -275,6 +288,7 @@ def test_missing_weekly_does_not_override_primary(secondary) -> None:
     usage = UsageSnapshot(primary=UsageWindow(40, 300), secondary=secondary)
     view = build_tray_meter_view(usage, 5, None)
     assert view.remaining_percent == 60
+    assert view.low_weekly is False
     assert "5-hour remaining: 60%" in view.tooltip
     assert "Weekly remaining: unknown" in view.tooltip
     _assert_tooltip_has_no_update_timestamp(view.tooltip)

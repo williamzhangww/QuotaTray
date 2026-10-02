@@ -197,7 +197,7 @@ class TrayController(QObject):
         if view.remaining_percent is None:
             self.tray.setIcon(_app_icon())
         else:
-            self.tray.setIcon(render_remaining_icon(view.remaining_percent))
+            self.tray.setIcon(render_remaining_icon(view.remaining_percent, alert=view.low_weekly))
         self.tray.setToolTip(view.tooltip)
 
 

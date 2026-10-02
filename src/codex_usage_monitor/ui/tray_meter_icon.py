@@ -12,6 +12,7 @@ class TrayMeterView:
     remaining_percent: int | None
     tooltip: str
     loading: bool = False
+    low_weekly: bool = False
 
 
 def remaining_percent_from_used(used_percent: int | None) -> int | None:
@@ -40,8 +41,9 @@ def build_tray_meter_view(
         return TrayMeterView(None, "QuotaTray — unavailable", loading=True)
 
     primary_remaining = window_remaining_percent(usage.primary)
-    if window_remaining_percent(usage.secondary) == 0:
-        primary_remaining = 0
+    weekly_remaining = window_remaining_percent(usage.secondary)
+    low_weekly = weekly_remaining is not None and weekly_remaining < 10
+    displayed_remaining = weekly_remaining if low_weekly else primary_remaining
     tooltip = build_tray_meter_tooltip(
         usage,
         refresh_interval_minutes,
@@ -49,7 +51,12 @@ def build_tray_meter_view(
         refresh_failed,
         now,
     )
-    return TrayMeterView(primary_remaining, tooltip, loading=primary_remaining is None)
+    return TrayMeterView(
+        displayed_remaining,
+        tooltip,
+        loading=displayed_remaining is None,
+        low_weekly=low_weekly,
+    )
 
 
 def build_tray_meter_tooltip(
@@ -79,6 +86,7 @@ def render_remaining_icon(
     remaining_percent: int,
     palette=None,
     dpr: float | None = None,
+    alert: bool = False,
 ):
     from PySide6.QtCore import Qt
     from PySide6.QtGui import QColor, QFont, QIcon, QPainter, QPixmap
@@ -95,12 +103,17 @@ def render_remaining_icon(
     painter.setRenderHint(QPainter.Antialiasing, True)
     painter.setRenderHint(QPainter.TextAntialiasing, True)
 
-    app_palette = palette or QApplication.palette()
-    base = app_palette.window().color()
-    is_dark = base.lightness() < 128
-    background = QColor(24, 27, 31, 245) if is_dark else QColor(248, 250, 252, 245)
-    border = QColor(91, 99, 112, 220) if is_dark else QColor(74, 85, 104, 220)
-    foreground = QColor(255, 255, 255) if is_dark else QColor(17, 24, 39)
+    if alert:
+        background = QColor(220, 38, 38)
+        border = QColor(127, 29, 29)
+        foreground = QColor(0, 0, 0)
+    else:
+        app_palette = palette or QApplication.palette()
+        base = app_palette.window().color()
+        is_dark = base.lightness() < 128
+        background = QColor(24, 27, 31, 245) if is_dark else QColor(248, 250, 252, 245)
+        border = QColor(91, 99, 112, 220) if is_dark else QColor(74, 85, 104, 220)
+        foreground = QColor(255, 255, 255) if is_dark else QColor(17, 24, 39)
 
     painter.setPen(border)
     painter.setBrush(background)

@@ -6,7 +6,7 @@ An unofficial Windows tray monitor for OpenAI Codex usage limits.
 
 ![QuotaTray running screenshot](docs/screenshot.png)
 
-The tray icon displays the 5-hour remaining percentage. Its tooltip shows 5-hour and weekly remaining quota, reset countdowns, reset credits, last refresh status, and stale or failure state.
+Normally the tray icon displays the 5-hour remaining percentage. When Weekly remaining falls below 10%, the tray switches to Weekly remaining and uses a red background with black text. At 10% or above it returns to the normal 5-hour display. Missing Weekly data does not trigger the warning state. Its tooltip shows 5-hour and weekly remaining quota, reset countdowns, reset credits, last refresh status, and stale or failure state.
 
 ## Features
 
@@ -31,11 +31,11 @@ The installer is per user and installs to `%LOCALAPPDATA%\Programs\QuotaTray`. I
 
 ## How the tray number works
 
-The number is the 5-hour quota remaining percentage, not the percentage used. For example, if 78% is used, the icon shows `22`. Values are clamped from 0 to 100.
+Normally the number is the 5-hour quota remaining percentage, not the percentage used. For example, if 78% is used, the icon shows `22`. Values are clamped from 0 to 100. When Weekly remaining is below 10%, the tray number switches to Weekly remaining and the icon uses a red background with black text. At 10% or above, it returns to the normal 5-hour display. Missing Weekly data does not trigger the warning state.
 
 ## Weekly exhausted behavior
 
-When the weekly remaining quota reaches 0%, the tray icon shows `0` and the tooltip hides the 5-hour block until weekly remaining becomes positive again.
+When the weekly remaining quota reaches 0%, the tray icon shows `0` in the red-background, black-text warning state, and the tooltip hides the 5-hour block until weekly remaining becomes positive again. At 1–9%, the tray shows the Weekly percentage in the warning state while the tooltip continues to show both the 5-hour and Weekly blocks. When Weekly recovers to 10% or above, the tray returns to the normal 5-hour display and colors.
 
 ## Tooltip
 
